@@ -1,0 +1,75 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Jiggler : MonoBehaviour
+{
+    [Range(0, 1)]
+    public float power = .1f;
+
+    [Header("Position Jiggler")]
+    public bool jigPosition = true;
+    public Vector3 positionJigAmount;
+    [Range(0, 120)]
+    public float positionFrequency = 10;
+    float positionTime;
+
+    [Header("Rotation Jiggler")]
+    public bool jigRotation = true;
+    public Vector3 rotationJigAmount;
+    [Range(0, 120)]
+    public float rotationFrequency = 10;
+    float rotationTime;
+
+    [Header("Scale Jiggler")]
+    public bool jigScale = true;
+    public Vector3 scaleJigAmount = new Vector3(.1f, -.1f, .1f);
+    [Range(0, 120)]
+    public float scaleFrequency = 10;
+    float scaleTime;
+
+    Vector3 basePosition;
+    Quaternion baseRotation;
+    Vector3 baseScale;
+    MeshRenderer meshRenderer;
+    bool colorUp = true;
+    float middle = 0.0f;
+    void Start(){
+        basePosition = this.transform.localPosition;
+        baseRotation = this.transform.localRotation;
+        baseScale = this.transform.localScale;
+        meshRenderer = GetComponent<MeshRenderer>();
+        meshRenderer.material = Resources.Load<Material>("Gradient3Color");
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        var dt = Time.deltaTime;
+        positionTime += dt * positionFrequency;
+        rotationTime += dt * rotationFrequency;
+        scaleTime += dt * scaleFrequency;
+
+        this.transform.localPosition = basePosition + positionJigAmount * Mathf.Sin(positionTime) * power;
+        this.transform.localRotation = baseRotation * Quaternion.Euler(rotationJigAmount * Mathf.Sin(positionTime) * power);
+        this.transform.localScale = baseScale + scaleJigAmount * Mathf.Sin(scaleTime) * power;
+        ChangeColor();
+    }
+
+    void ChangeColor()
+    {
+        if (middle >= 1) { colorUp = false; }
+        if (middle <= 0.1f) { colorUp = true;  }
+        if (colorUp)
+        {
+            middle += 0.01f;
+            meshRenderer.material.SetFloat("_Middle", middle);
+        }
+        else
+        {
+            middle -= 0.01f;
+            meshRenderer.material.SetFloat("_Middle", middle);
+        }
+    }
+}
