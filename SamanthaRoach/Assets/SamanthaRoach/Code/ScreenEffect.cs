@@ -23,6 +23,7 @@ public class ScreenEffect : MonoBehaviour
     {
         if (!_screenEffectOn)
         {
+            Debug.Log("Run");
             _screenEffectOn = true;
             StartCoroutine(MoveScreenEffect(0.0f,1.0f));
         }

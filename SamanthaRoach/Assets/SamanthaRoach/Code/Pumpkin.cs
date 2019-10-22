@@ -9,7 +9,6 @@ public class Pumpkin : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log("hit");
             PumpkinHit.Invoke();
         }
     }
