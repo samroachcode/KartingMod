@@ -39,7 +39,7 @@ public class Jiggler : MonoBehaviour
         baseRotation = this.transform.localRotation;
         baseScale = this.transform.localScale;
         meshRenderer = GetComponent<MeshRenderer>();
-        meshRenderer.material = Resources.Load<Material>("Gradient3Color");
+        meshRenderer.material = Resources.Load<Material>("2GradientColor");
         
     }
 
