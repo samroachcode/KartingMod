@@ -36,5 +36,7 @@ namespace KartGame.KartSystems
         /// Used to determine when a drift should continue.
         /// </summary>
         bool HopHeld { get; }
+
+
     }
 }
